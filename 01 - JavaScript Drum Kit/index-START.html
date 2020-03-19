@@ -58,7 +58,33 @@ testtest
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-
+  // Add event listener to the document to listen for keydowns
+  document.addEventListener("keydown", function (e) { 
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if (!audio) return;
+    key.classList.add('playing');
+    // Rewinds to the start
+    audio.currentTime = 0;
+    // Plays audio
+    audio.play();
+    
+  })
+  /*
+    As was mentioned previously, the this keyword works differently 
+    in arrow functions. The methods call(), apply(), and bind() 
+    will not change the value of this in arrow functions. 
+    (In fact, the value of this inside a function simply 
+    can’t be changed; it will be the same value as when the 
+    function was called.) If you need to bind to a different value, 
+    you’ll need to use a function expression.
+  */
+  function removetransition(e) {
+    if (e.propertyName !== 'transform') return;
+    this.classList.remove('playing');
+  }
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener("transitionend", removetransition));
 </script>
 
 

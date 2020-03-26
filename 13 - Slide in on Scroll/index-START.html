@@ -7,7 +7,7 @@
 <body>
 
   <div class="site-wrap">
-
+    <button id="butt">Click me</button>
     <h1>Slide in on Scroll</h1>
 
     <p>Consectetur adipisicing elit. Tempore tempora rerum, est autem cupiditate, corporis a qui libero ipsum delectus quidem dolor at nulla, adipisci veniam in reiciendis aut asperiores omnis blanditiis quod quas laborum nam! Fuga ad tempora in aspernatur pariaturlores sunt esse magni, ut, dignissimos.</p>
@@ -41,21 +41,59 @@
 
 
   </div>
-
   <script>
-    function debounce(func, wait = 20, immediate = true) {
-      var timeout;
+    // Immediate = true - leading (executes immediately and will only execute 
+    // again after action is not repeated after X seconds)
+
+    // Immediate = false - non-leading
+    // Will execute with context of the last event
+    // after action is not repeated after X seconds) 
+    
+    function debounce(func, delay, immediate = true) {
+      let currTimeout;
+      let count = 0;
       return function() {
-        var context = this, args = arguments;
-        var later = function() {
-          timeout = null;
-          if (!immediate) func.apply(context, args);
-        };
-        var callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
-      };
+        if(currTimeout) {
+          clearTimeout(currTimeout);
+        }
+        if(immediate && !currTimeout) func.apply(this, arguments);
+        console.log(count);
+        count++;
+        currTimeout = setTimeout(() => {
+          if (!immediate) func.apply(this,arguments);
+          currTimeout = null;
+        }, delay)
+
+      }
+    }
+
+    window.addEventListener('scroll', debounce((e) => {checkSlide(e)}, 1000));
+    window.addEventListener("keydown", debounce((e) => {printMsg(e)}, 1000));
+
+
+
+
+    const sliderImages = document.querySelectorAll('.slide-in');
+    function checkSlide(e, msg) {
+      console.log(e);
+      sliderImages.forEach(sliderImage => {
+        const slideInAt = (window.scrollY + window.innerHeight) - 
+        sliderImage.height / 2;
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        if (isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add('active');
+        } else {
+          sliderImage.classList.remove('active');
+        } 
+
+      });
+    }
+    function printMsg(e, msg1, msg2) {
+      console.log(e);
     }
 
   </script>

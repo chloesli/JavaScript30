@@ -96,6 +96,44 @@
   </div>
 
 <script>
+  let shiftdown = false;
+  document.addEventListener("keydown", handleKeydown);
+  document.addEventListener("keyup", handleKeyup);
+  let checkboxes = document.querySelectorAll("input[type='checkbox']"); 
+  let first = 0;
+  for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("change", function (e) {
+      handleCheck(e, i);
+    });
+  }
+    
+  function handleCheck(e, index) {
+    console.log(index);
+    if (shiftdown !== true) {
+      first = index;
+      return;
+    } 
+    let from = first;
+    let to = index;
+    if (index < first) {
+      from = index;
+      to = first;
+    }
+    for (let x = from; x < to; x++) {
+      checkboxes[x].checked = true;
+    }
+  }
+  function handleKeydown(e) {
+    if (e.keyCode === 16) {
+      shiftdown = true;
+    }
+  }
+  function handleKeyup(e) {
+    if (e.keyCode === 16) {
+      shiftdown = false;
+    }
+  }
+  
 </script>
 </body>
 </html>

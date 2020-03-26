@@ -34,6 +34,7 @@
     const fifteen = inventors.filter((inventor) => {
       return (inventor.year >= 1500 && inventor.year < 1600) 
     })
+    console.log("filter : \n");
     console.log(fifteen);
     // Array.prototype.map() - always return same amount as you give it
     // Does something to all the elements in the array
@@ -41,6 +42,7 @@
     const fullNames = inventors.map((inventor) => {
       return `${inventor.first} ${inventor.last}`;
     })
+    console.log("map : \n");
     console.log(fullNames);
 
     // Array.prototype.sort() - two items, return 1 or -1
@@ -53,6 +55,7 @@
       } 
       return -1;
     })
+    console.log("sort : \n");
     console.table(ordered);
     // Array.prototype.reduce() - alternative to using a loop to sum
     // 4. How many years did all the inventors live all together?
@@ -60,6 +63,7 @@
     const totalYears = inventors.reduce((total, inventor) => {
       return total + (inventor.passed - inventor.year);
     }, 0)
+    console.log("reduce : \n");
     console.log(totalYears);
     // 5. Sort the inventors by years lived
     const sortyears = inventors.sort((a,b) => {
@@ -69,6 +73,7 @@
       } 
         return 1;
     })
+    console.log("sort : \n");
     console.log(sortyears);
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -85,6 +90,7 @@
       const [blast, bfirst] = b.split(", ");
       return alast > blast ? 1 : -1;
     })
+    console.log("sort: \n");
     console.log(alpha);
     // 8. Reduce Exercise
     // Sum up the instances of each of these
@@ -96,6 +102,7 @@
         total[currentValue]++;
         return total;
     }, {})
+    console.log("reduce : \n");
     console.log(transportation);
   </script>
 </body>
